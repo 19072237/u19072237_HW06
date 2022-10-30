@@ -1,0 +1,52 @@
+﻿<html>
+<head>
+
+ <script src="~/Scripts/chart.js"></script>
+
+
+</head>
+<body>
+    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+
+    @section scripts{
+
+        <script>
+
+            var xValues = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var yValues = [163, 152, 200, 211, 139, 127, 122, 148, 160, 125, 118, 90];
+            var colors = ["red", "blue", "brown", "purple", "green", "yellow", "orange", "black", "", "blue", "brown", "light blue"];
+
+
+            new Chart("myChart", {
+                type: "bar",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: colors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: "Mountain Bike Order Report",
+                    }
+                }
+            });
+            
+
+
+        </script>
+        
+        
+        }
+
+
+   
+    
+
+    
+
+</body>
+</html>

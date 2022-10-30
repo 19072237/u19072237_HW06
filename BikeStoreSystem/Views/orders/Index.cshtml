@@ -1,0 +1,51 @@
+﻿@model PagedList.IPagedList<BikeStoreSystem.Models.order_items>
+
+@using PagedList.Mvc;
+@using PagedList;
+
+
+
+
+<h2>Orders</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@foreach (var item in Model.Select(s => s.order_id).Distinct())
+{
+    <div>
+        <h3>Order @item- @Model.Select(s => s.order.order_date).First()</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>List Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var i in Model.Where(i => i.order_id == item))
+                {
+
+                    var total = i.quantity * i.list_price;
+
+                    <tr>
+                        <td>@i.product.product_name.</td>
+                        <td>@i.list_price</td>
+                        <td>@i.quantity</td>
+                        <td>@total</td>
+                    </tr>
+                   
+                }
+            </tbody>
+            
+        </table>
+        
+        <br />
+        <br>
+    </div>
+}
+
+@Html.PagedListPager(Model, i => Url.Action("Index", "orders", new { i, Name = Request.QueryString["Name"] }))
