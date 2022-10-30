@@ -7,14 +7,33 @@
 
 
 <h2>Orders</h2>
+<div class="row">
+    <div class="col-md-3">
+        <input type="text" name="Sname" class="form-control" placeholder="yyyy/mm/dd" />
+    </div>
+    <div class="col-md-7">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+
+
+
 @foreach (var item in Model.Select(s => s.order_id).Distinct())
 {
+
+    var time = DateTime.Today;
+    foreach (var b in Model)
+    {
+        if (b.order.order_id == item)
+        {
+            time = b.order.order_date.Date;
+            break;
+        }
+    }
     <div>
-        <h3>Order @item- @Model.Select(s => s.order.order_date).First()</h3>
+        <h3>Order @item- @time</h3>
         <table class="table">
             <thead>
                 <tr>
@@ -37,15 +56,24 @@
                         <td>@i.quantity</td>
                         <td>@total</td>
                     </tr>
-                   
+
                 }
             </tbody>
-            
+
         </table>
-        
+
         <br />
         <br>
     </div>
 }
 
 @Html.PagedListPager(Model, i => Url.Action("Index", "orders", new { i, Name = Request.QueryString["Name"] }))
+
+@section scripts{
+    <script>
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            startDate: '-3d'
+        });
+    </script>
+}
